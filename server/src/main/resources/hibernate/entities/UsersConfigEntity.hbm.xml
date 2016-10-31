@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="teamProject.entities.UserConfig" table="users_config" schema="trackfriends">
+        <id name="id" column="id"/>
+        <property name="id_user" column="id_user"/>
+        <property name="updateTime" column="update_time"/>
+        <property name="alertZone" column="alert_zone"/>
+    </class>
+</hibernate-mapping>
