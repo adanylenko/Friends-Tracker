@@ -1,12 +1,12 @@
 package teamProject.controllers.servlets;
 
-import teamProject.service.interfaces.UserConfigService;
+import teamProject.service.interfaces.ServiceManager;
 
 public class UserConfigServlet {
-	private UserConfigService userConfigService;
+	private ServiceManager serviceManager;
 
-	public void setUserConfigService(UserConfigService userConfigService) {
-		this.userConfigService = userConfigService;
+	public void setServiceManager(ServiceManager serviceManager) {
+		this.serviceManager = serviceManager;
 	}
-	
+
 }

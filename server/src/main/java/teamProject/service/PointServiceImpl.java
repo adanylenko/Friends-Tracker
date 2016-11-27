@@ -67,6 +67,6 @@ public class PointServiceImpl implements PointService {
 			return null;
 		if (points.size() <= cntPoint)
 			return points;
-		return points.subList(0, cntPoint - 1);
+		return points.subList(0, cntPoint);
 	}
 }

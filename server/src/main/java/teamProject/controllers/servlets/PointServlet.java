@@ -1,11 +1,12 @@
 package teamProject.controllers.servlets;
 
-import teamProject.service.interfaces.PointService;
+import teamProject.service.interfaces.ServiceManager;
 
 public class PointServlet {
-	private PointService pointService;
+	private ServiceManager serviceManager;
 
-	public void setPointService(PointService pointService) {
-		this.pointService = pointService;
+	public void setServiceManager(ServiceManager serviceManager) {
+		this.serviceManager = serviceManager;
 	}
+
 }

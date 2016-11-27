@@ -14,6 +14,8 @@ public interface UserService {
 	boolean changeUser(User user);
 
 	User getUser(String login);
+	
+	User getUser(int id_user);
 
 	void printAll();
 }

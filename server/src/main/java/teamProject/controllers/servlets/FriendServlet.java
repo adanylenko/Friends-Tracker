@@ -1,12 +1,12 @@
 package teamProject.controllers.servlets;
 
-import teamProject.service.interfaces.FriendService;
+import teamProject.service.interfaces.ServiceManager;
 
 public class FriendServlet {
-	private FriendService friendService;
+	private ServiceManager serviceManager;
 
-	public void setFriendService(FriendService friendService) {
-		this.friendService = friendService;
+	public void setServiceManager(ServiceManager serviceManager) {
+		this.serviceManager = serviceManager;
 	}
 
 }

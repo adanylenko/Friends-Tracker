@@ -23,6 +23,13 @@
 	<bean id="userConfigService" class="teamProject.service.UserConfigServiceImpl">
 		<property name="userConfigDao" ref="userConfigDao" />
 	</bean>
-
+	
+	
+	<bean id="serviceManager" class="teamProject.service.ServiceManagerImpl">
+		<property name="userConfigService" ref="userConfigService" />
+		<property name="userService" ref="userService" />
+		<property name="friendService" ref="friendService" />
+		<property name="pointService" ref="pointService" />
+	</bean>
 
 </beans>

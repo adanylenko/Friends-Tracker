@@ -13,23 +13,22 @@
 
 
 	<bean id="testServlet" class="teamProject.controllers.servlets.TestServlet">
-		<property name="userService" ref="userService" />
-		<property name="pointService" ref="pointService" />
+		<property name="serviceManager" ref="serviceManager" />
 	</bean>
 
 	<bean id="userServlet" class="teamProject.controllers.servlets.UserServlet">
-		<property name="userService" ref="userService" />
+		<property name="serviceManager" ref="serviceManager" />
 	</bean>
 	
 	<bean id="friendServlet" class="teamProject.controllers.servlets.FriendServlet">
-		<property name="friendService" ref="friendService" />
+		<property name="serviceManager" ref="serviceManager" />
 	</bean>
 	
 	<bean id="pointServlet" class="teamProject.controllers.servlets.PointServlet">
-		<property name="pointService" ref="pointService" />
+		<property name="serviceManager" ref="serviceManager" />
 	</bean>
 	
 	<bean id="userConfigServlet" class="teamProject.controllers.servlets.UserConfigServlet">
-		<property name="userConfigService" ref="userConfigService" />
+		<property name="serviceManager" ref="serviceManager" />
 	</bean>
 </beans>
