@@ -5,12 +5,15 @@ import java.util.List;
 import teamProject.entities.User;
 
 public interface UserDao {
-	void addUser(User user);
-	void updateUser(User user);
-	List<User> getAllUsers();
-	User getUser(String login);
-	void deleteUser(User user);
-	
-	
+	boolean add(User user);
 
+	boolean update(User user);
+
+	boolean delete(User user);
+
+	User getbyId(int id);
+
+	List<User> getAll();
+
+	User getUser(String login);
 }

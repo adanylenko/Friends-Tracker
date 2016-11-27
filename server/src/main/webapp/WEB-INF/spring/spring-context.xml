@@ -8,18 +8,28 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<import resource="daoConfig.xml" />
+	<import resource="serviceConfig.xml"/>
 	<mvc:annotation-driven />
 
 
-	<bean id="cityDao" class="teamProject.service.TestService">
-		<property name="user" ref="userDao" />
-	</bean>
-
-
-	
-
 	<bean id="testServlet" class="teamProject.controllers.servlets.TestServlet">
-		<property name="dao" ref="cityDao" />
+		<property name="userService" ref="userService" />
+		<property name="pointService" ref="pointService" />
 	</bean>
 
+	<bean id="userServlet" class="teamProject.controllers.servlets.UserServlet">
+		<property name="userService" ref="userService" />
+	</bean>
+	
+	<bean id="friendServlet" class="teamProject.controllers.servlets.FriendServlet">
+		<property name="friendService" ref="friendService" />
+	</bean>
+	
+	<bean id="pointServlet" class="teamProject.controllers.servlets.PointServlet">
+		<property name="pointService" ref="pointService" />
+	</bean>
+	
+	<bean id="userConfigServlet" class="teamProject.controllers.servlets.UserConfigServlet">
+		<property name="userConfigService" ref="userConfigService" />
+	</bean>
 </beans>

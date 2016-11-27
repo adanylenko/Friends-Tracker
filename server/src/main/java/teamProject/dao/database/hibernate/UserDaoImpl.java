@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import teamProject.dao.database.UserDao;
 import teamProject.entities.User;
 
@@ -19,28 +20,32 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void addUser(User user) {
+	public boolean add(User user) {
 		try {
 			sessionFactory.getCurrentSession().save(user);
 
 		} catch (Exception ex) {
 			LOG.error("Error when trying to add User.\n User login: {}\n", user.getLogin(), ex);
+			return false;
 		}
+		return true;
 
 	}
 
 	@Override
-	public void updateUser(User user) {
+	public boolean update(User user) {
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(user);
 
 		} catch (Exception ex) {
 			LOG.error("Error when trying to change User.\n User login: {}\n", user.getLogin(), ex);
+			return false;
 		}
+		return true;
 	}
 
 	@Override
-	public List<User> getAllUsers() {
+	public List<User> getAll() {
 		List<User> users = null;
 		try {
 			users = sessionFactory.getCurrentSession().createCriteria(User.class).list();
@@ -63,13 +68,26 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void deleteUser(User user) {
+	public boolean delete(User user) {
 		try {
 			sessionFactory.getCurrentSession().delete(user);
 		} catch (Exception ex) {
-			LOG.error("Error when trying to Delete User with login {}.",user.getLogin(), ex);
+			LOG.error("Error when trying to Delete User with login {}.", user.getLogin(), ex);
+			return false;
 		}
+		return true;
 
+	}
+
+	@Override
+	public User getbyId(int id) {
+		User user = null;
+		try {
+			user = (User) sessionFactory.getCurrentSession().get(User.class, id);
+		} catch (Exception e) {
+			LOG.error("Error when try get user with id={}", id);
+		}
+		return user;
 	}
 
 }

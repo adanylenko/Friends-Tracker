@@ -1,10 +1,13 @@
 package teamProject.dao.database.hibernate;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import teamProject.dao.database.UserConfigDao;
 import teamProject.entities.UserConfig;
 
@@ -17,32 +20,38 @@ public class UserConfigDaoImpl implements UserConfigDao {
 	}
 
 	@Override
-	public void addUserConfig(UserConfig config) {
+	public boolean add(UserConfig config) {
 		try {
 			sessionFactory.getCurrentSession().save(config);
 
 		} catch (Exception ex) {
 			LOG.error("Error when trying to add UserConfig.\n With User id: {}\n", config.getId_user(), ex);
+			return false;
 		}
+		return true;
 	}
 
 	@Override
-	public void updateConfig(UserConfig config) {
+	public boolean update(UserConfig config) {
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(config);
 
 		} catch (Exception ex) {
 			LOG.error("Error when trying to change UserConfig.\n With User id: {}\n", config.getId_user(), ex);
+			return false;
 		}
+		return true;
 	}
 
 	@Override
-	public void deleteConfig(UserConfig config) {
+	public boolean delete(UserConfig config) {
 		try {
 			sessionFactory.getCurrentSession().delete(config);
 		} catch (Exception ex) {
 			LOG.error("Error when trying to Delete UserConfig with User id: {}.", config.getId_user(), ex);
+			return false;
 		}
+		return true;
 	}
 
 	@Override
@@ -55,6 +64,28 @@ public class UserConfigDaoImpl implements UserConfigDao {
 			LOG.error("Error when trying to get UserConfig with User id: {}.", id_user, ex);
 		}
 		return config;
+	}
+
+	@Override
+	public UserConfig getbyId(int id) {
+		UserConfig userConfig = null;
+		try {
+			userConfig = (UserConfig) sessionFactory.getCurrentSession().get(UserConfig.class, id);
+		} catch (Exception e) {
+			LOG.error("Error when try get userConfig with id={}", id);
+		}
+		return userConfig;
+	}
+
+	@Override
+	public List<UserConfig> getAll() {
+		List<UserConfig> usersConfig = null;
+		try {
+			usersConfig = sessionFactory.getCurrentSession().createCriteria(UserConfig.class).list();
+		} catch (Exception ex) {
+			LOG.error("Error when trying to get all UserConfig.", ex);
+		}
+		return usersConfig;
 	}
 
 }

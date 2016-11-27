@@ -5,10 +5,16 @@ import java.util.List;
 import teamProject.entities.Point;
 
 public interface PointDao {
-	void addPoint(Point point);
-	void deletePoint(Point point);
-	void updatePoint(Point point);
+	boolean add(Point point);
+
+	boolean update(Point point);
+
+	boolean delete(Point point);
+
+	Point getbyId(int id);
+
+	List<Point> getAll();
+
 	List<Point> getUserPoints(int id_user);
-	
 
 }

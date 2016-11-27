@@ -16,7 +16,8 @@ public class TestService {
 	
 	@Transactional
 	public void printAllUser(){
-		List<User> users=user.getAllUsers();
+		System.out.println("hello");
+		List<User> users=user.getAll();
 		for (User user : users) {
 			System.out.println(user.getLogin());
 		}
