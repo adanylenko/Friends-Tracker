@@ -64,7 +64,6 @@ public class ServiceManagerImpl implements ServiceManager {
 
 		if (friends == null || userPoint == null || friends.size() == 0 || userConfig == null)
 			return null;
-		System.out.println("user point lat:" + userPoint.getLat() + ",lng=" + userPoint.getLng());
 
 		int alertDist = userConfig.getAlertZone();
 

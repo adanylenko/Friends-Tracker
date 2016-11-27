@@ -17,15 +17,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public void printAll() {
-		System.out.println("user service class");
-		for (User user : userDao.getAll()) {
-			System.out.println(user.getLogin());
-		}
-	}
-
-	@Override
-	@Transactional
 	public List<User> getAll() {
 		List<User> users = userDao.getAll();
 		return users;
@@ -65,6 +56,20 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public User getUser(int id_user) {
 		return userDao.getbyId(id_user);
+	}
+
+	@Override
+	@Transactional
+	public String loginUser(User user) {
+		if (user == null || user.getLogin().length() == 0 || user.getPassword().length() == 0)
+			return null;
+		User currentUser = userDao.getUser(user.getLogin());
+		if (currentUser == null)
+			return null;
+		if (currentUser.getLogin().compareTo(user.getLogin()) == 0
+				&& currentUser.getPassword().compareTo(user.getPassword()) == 0)
+			return currentUser.getToken();
+		return null;
 	}
 
 }
