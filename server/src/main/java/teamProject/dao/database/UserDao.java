@@ -5,15 +5,15 @@ import java.util.List;
 import teamProject.entities.User;
 
 public interface UserDao {
-	boolean add(User user);
+	User add(User user) throws Exception;
 
-	boolean update(User user);
+	User update(User user) throws Exception;
 
-	boolean delete(User user);
+	User delete(User user) throws Exception;
 
-	User getbyId(int id);
+	User getbyId(int id) throws Exception;
 
-	List<User> getAll();
+	List<User> getAll() throws Exception;
 
-	User getUser(String login);
+	User getUser(String login) throws Exception;
 }

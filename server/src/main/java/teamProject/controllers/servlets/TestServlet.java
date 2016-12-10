@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import teamProject.entities.User;
 import teamProject.service.interfaces.ServiceManager;
 
 /**
@@ -13,7 +15,7 @@ import teamProject.service.interfaces.ServiceManager;
  */
 
 @RestController
-@RequestMapping(value = "/rest")
+@RequestMapping(value = "/test")
 public class TestServlet {
 	private static final Logger LOG = LoggerFactory.getLogger(TestServlet.class);
 	private ServiceManager serviceManager;
@@ -26,6 +28,10 @@ public class TestServlet {
 //		for (Point point : points) {
 //			System.out.println("date" + point.getDate());
 //		}
+		User user=new User();
+		user.setLogin("alex");
+		user.setPassword("230395");
+		System.out.println(serviceManager.getUserService().loginUser(user));
 
 	}
 

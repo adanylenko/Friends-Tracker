@@ -1,5 +1,7 @@
 package teamProject.service;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -18,58 +20,96 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public List<User> getAll() {
-		List<User> users = userDao.getAll();
+		List<User> users = null;
+		try {
+			users = userDao.getAll();
+		} catch (Exception ex) {
+			users = null;
+		}
 		return users;
 	}
 
 	@Override
 	@Transactional
 	public boolean addUser(User user) {
-		if (userDao.add(user))
+		try {
+			userDao.add(user);
 			return true;
-		return false;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@Override
 	@Transactional
 	public boolean deleteUser(User user) {
-		if (userDao.delete(user))
+		try {
+			userDao.delete(user);
 			return true;
-		return false;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@Override
 	@Transactional
 	public boolean changeUser(User user) {
-		if (userDao.update(user))
+		try {
+			userDao.update(user);
 			return true;
-		return false;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@Override
 	@Transactional
 	public User getUser(String login) {
-		return userDao.getUser(login);
+		User user = null;
+		try {
+			user = userDao.getUser(login);
+		} catch (Exception e) {
+			user = null;
+		}
+		return user;
 	}
 
 	@Override
 	@Transactional
 	public User getUser(int id_user) {
-		return userDao.getbyId(id_user);
+		User user = null;
+		try {
+			user = userDao.getbyId(id_user);
+		} catch (Exception e) {
+			user = null;
+		}
+		return user;
 	}
 
 	@Override
 	@Transactional
 	public String loginUser(User user) {
-		if (user == null || user.getLogin().length() == 0 || user.getPassword().length() == 0)
+		if (user == null || user.getLogin() == null || user.getLogin().length() == 0 || user.getPassword() == null
+				|| user.getPassword().length() == 0)
 			return null;
-		User currentUser = userDao.getUser(user.getLogin());
+		final User currentUser = getUser(user.getLogin());
 		if (currentUser == null)
 			return null;
 		if (currentUser.getLogin().compareTo(user.getLogin()) == 0
-				&& currentUser.getPassword().compareTo(user.getPassword()) == 0)
+				&& currentUser.getPassword().compareTo(user.getPassword()) == 0) {
+			final SecureRandom random = new SecureRandom();
+			final String userToken = new BigInteger(130, random).toString(32);
+			currentUser.setToken(userToken);
+			changeUser(currentUser);
 			return currentUser.getToken();
+		}
 		return null;
+	}
+
+	@Override
+	public boolean checkUser(User user) {
+
+		return false;
 	}
 
 }

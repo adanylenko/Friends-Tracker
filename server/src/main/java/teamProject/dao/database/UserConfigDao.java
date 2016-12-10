@@ -5,15 +5,15 @@ import java.util.List;
 import teamProject.entities.UserConfig;
 
 public interface UserConfigDao {
-	boolean add(UserConfig userConfig);
+	UserConfig add(UserConfig userConfig) throws Exception;
 
-	boolean update(UserConfig userConfig);
+	UserConfig update(UserConfig userConfig) throws Exception;
 
-	boolean delete(UserConfig userConfig);
+	UserConfig delete(UserConfig userConfig) throws Exception;
 
-	UserConfig getbyId(int id);
+	UserConfig getbyId(int id) throws Exception;
 
-	List<UserConfig> getAll();
+	List<UserConfig> getAll() throws Exception;
 
-	UserConfig getUserConfig(int id_user);
+	UserConfig getUserConfig(int id_user) throws Exception;
 }

@@ -18,43 +18,65 @@ public class PointServiceImpl implements PointService {
 	@Override
 	@Transactional
 	public boolean addPoint(Point point) {
-		if (pointDao.add(point))
+		try {
+			pointDao.add(point);
 			return true;
-		return false;
+		} catch (Exception ex) {
+			return false;
+		}
 	}
 
 	@Override
 	@Transactional
 	public boolean deletePoint(Point point) {
-		if (pointDao.delete(point))
+		try {
+			pointDao.delete(point);
 			return true;
-		return false;
+		} catch (Exception ex) {
+			return false;
+		}
 	}
 
 	@Override
 	@Transactional
 	public boolean changePoint(Point point) {
-		if (pointDao.delete(point))
-			return true;
 		return false;
 	}
 
 	@Override
 	@Transactional
 	public Point getPoint(int id_point) {
-		return pointDao.getbyId(id_point);
+		Point point = null;
+		try {
+			point = pointDao.getbyId(id_point);
+		} catch (Exception ex) {
+			point = null;
+		}
+		return point;
 	}
 
 	@Override
 	@Transactional
 	public List<Point> getAll() {
-		return pointDao.getAll();
+		List<Point> points = null;
+		try {
+			points = pointDao.getAll();
+		} catch (Exception ex) {
+			points = null;
+		}
+		return points;
 	}
 
 	@Override
 	@Transactional
 	public List<Point> getAllUserPoint(int id_user) {
-		return pointDao.getUserPoints(id_user);
+		List<Point> points = null;
+		try {
+			points = pointDao.getUserPoints(id_user);
+		} catch (Exception ex) {
+			points = null;
+		}
+		return points;
 	}
 
 	@Override
@@ -62,7 +84,7 @@ public class PointServiceImpl implements PointService {
 	public List<Point> getCntLastUserPoint(int id_user, int cntPoint) {
 		if (cntPoint <= 0)
 			return null;
-		List<Point> points = pointDao.getUserPoints(id_user);
+		final List<Point> points = getAllUserPoint(id_user);
 		if (points == null)
 			return null;
 		if (points.size() <= cntPoint)

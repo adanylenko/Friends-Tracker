@@ -14,4 +14,6 @@ public interface ServiceManager {
 	PointService getPointService();
 	
 	List<User> getNearbyFriends(int id_user);
+	
+	String registerNewUser(User user);
 }

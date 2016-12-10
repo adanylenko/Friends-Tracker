@@ -5,15 +5,15 @@ import java.util.List;
 import teamProject.entities.Friend;
 
 public interface FriendDao {
-	boolean add(Friend friend);
+	Friend add(Friend friend) throws Exception;
 
-	boolean update(Friend friend);
+	Friend update(Friend friend) throws Exception;
 
-	boolean delete(Friend friend);
+	Friend delete(Friend friend) throws Exception;
 
-	Friend getbyId(int id);
+	Friend getbyId(int id) throws Exception;
 
-	List<Friend> getAll();
+	List<Friend> getAll() throws Exception;
 
-	List<Friend> getUserFriends(int id_user);
+	List<Friend> getUserFriends(int id_user) throws Exception;
 }

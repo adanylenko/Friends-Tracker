@@ -57,22 +57,23 @@ public class ServiceManagerImpl implements ServiceManager {
 
 	@Override
 	public List<User> getNearbyFriends(int id_user) {
-		List<Friend> friends = friendService.getAllUserFriend(id_user);
-		List<User> nearbyFriends = new ArrayList<>();
-		Point userPoint = pointService.getCntLastUserPoint(id_user, 1).get(0);
-		UserConfig userConfig = userConfigService.getUserConfig(id_user);
+		final List<Friend> friends = friendService.getAllUserFriend(id_user);
+		final List<User> nearbyFriends = new ArrayList<>();
+		final Point userPoint = pointService.getCntLastUserPoint(id_user, 1).get(0);
+		final UserConfig userConfig = userConfigService.getUserConfig(id_user);
 
 		if (friends == null || userPoint == null || friends.size() == 0 || userConfig == null)
 			return null;
 
-		int alertDist = userConfig.getAlertZone();
+		final int alertDist = userConfig.getAlertZone();
 
 		for (int i = 0; i < friends.size(); i++) {
-			Point friendPoint = pointService.getCntLastUserPoint(friends.get(i).getId_friend(), 1).get(0);
+			final Point friendPoint = pointService.getCntLastUserPoint(friends.get(i).getId_friend(), 1).get(0);
 			if (friendPoint == null)
 				continue;
 
-			double dist = distFrom(userPoint.getLat(), userPoint.getLng(), friendPoint.getLat(), friendPoint.getLng());
+			final double dist = distFrom(userPoint.getLat(), userPoint.getLng(), friendPoint.getLat(),
+					friendPoint.getLng());
 			if (dist <= alertDist)
 				nearbyFriends.add(userService.getUser(friends.get(i).getId()));
 		}
@@ -90,6 +91,15 @@ public class ServiceManagerImpl implements ServiceManager {
 		double dist = earthRadius * c;
 
 		return dist;
+	}
+
+	@Override
+	public String registerNewUser(User user) {
+		final User checkUser = userService.getUser(user.getLogin());
+		if (checkUser != null)
+			return null;
+		userService.addUser(user);
+		return userService.loginUser(user);
 	}
 
 }

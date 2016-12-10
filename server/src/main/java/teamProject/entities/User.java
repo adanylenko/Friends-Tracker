@@ -1,14 +1,16 @@
 package teamProject.entities;
 
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Created by adanu on 31.10.2016.
  */
+@XmlRootElement
 public class User {
 	private int id;
 	private String login;
-	private transient String password;
-	private transient String token;
+	private String password;
+	private String token;
 
 	public User() {
 	}

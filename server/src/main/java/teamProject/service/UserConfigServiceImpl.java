@@ -16,30 +16,45 @@ public class UserConfigServiceImpl implements UserConfigService {
 	@Override
 	@Transactional
 	public boolean addUserConfig(UserConfig userConfig) {
-		if (userConfigDao.add(userConfig))
+		try {
+			userConfigDao.add(userConfig);
 			return true;
-		return false;
+		} catch (Exception ex) {
+			return false;
+		}
 	}
 
 	@Override
 	@Transactional
 	public boolean deleteUserConfig(UserConfig userConfig) {
-		if (userConfigDao.delete(userConfig))
+		try {
+			userConfigDao.delete(userConfig);
 			return true;
-		return false;
+		} catch (Exception ex) {
+			return false;
+		}
 	}
 
 	@Override
 	@Transactional
 	public boolean changeUserConfig(UserConfig userConfig) {
-		if (userConfigDao.update(userConfig))
+		try {
+			userConfigDao.update(userConfig);
 			return true;
-		return false;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@Override
 	@Transactional
 	public UserConfig getUserConfig(int id_user) {
-		return userConfigDao.getUserConfig(id_user);
+		UserConfig userConfig = null;
+		try {
+			userConfig = userConfigDao.getUserConfig(id_user);
+		} catch (Exception ex) {
+			userConfig = null;
+		}
+		return userConfig;
 	}
 }

@@ -18,4 +18,6 @@ public interface UserService {
 	User getUser(int id_user);
 
 	String loginUser(User user);
+	
+	boolean checkUser(User user);
 }

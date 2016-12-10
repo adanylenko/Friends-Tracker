@@ -18,42 +18,70 @@ public class FriendServiceImpl implements FriendService {
 	@Override
 	@Transactional
 	public boolean addFriend(Friend friend) {
-		if (friendDao.add(friend))
+		try {
+			friendDao.add(friend);
 			return true;
-		return false;
+		} catch (Exception ex) {
+			return false;
+		}
+
 	}
 
 	@Override
 	@Transactional
 	public boolean changeFriend(Friend friend) {
-		if (friendDao.update(friend))
+		try {
+			friendDao.update(friend);
 			return true;
-		return false;
+		} catch (Exception ex) {
+			return false;
+		}
 	}
 
 	@Override
 	@Transactional
 	public boolean deleteFriend(Friend friend) {
-		if (friendDao.delete(friend))
+		try {
+			friendDao.delete(friend);
 			return true;
-		return false;
+		} catch (Exception ex) {
+			return false;
+		}
 	}
 
 	@Override
 	@Transactional
 	public Friend getFriend(int id_friend) {
-		return friendDao.getbyId(id_friend);
+		Friend friend = null;
+		try {
+			friend = friendDao.getbyId(id_friend);
+		} catch (Exception ex) {
+			friend = null;
+		}
+		return friend;
 	}
 
 	@Override
 	@Transactional
 	public List<Friend> getAllUserFriend(int id_user) {
-		return friendDao.getUserFriends(id_user);
+		List<Friend> friends = null;
+		try {
+			friends = friendDao.getUserFriends(id_user);
+		} catch (Exception ex) {
+			friends = null;
+		}
+		return friends;
 	}
 
 	@Override
 	@Transactional
 	public List<Friend> getAll() {
-		return friendDao.getAll();
+		List<Friend> friends = null;
+		try {
+			friends = friendDao.getAll();
+		} catch (Exception ex) {
+			friends = null;
+		}
+		return friends;
 	}
 }
