@@ -61,6 +61,7 @@ button {
 						<tr>
 							<th>id</th>
 							<th>login</th>
+							<th>password</th>
 						</tr>
 
 					</table>
@@ -89,7 +90,10 @@ button {
 				"login" : "alex",
 				"password" : "230395",
 				"token":null,
-				"id":null
+				"id":null,
+				"id_user":"1",
+				"lat":"111",
+				"lng":"222"
 			};
 		$.ajax({
 			url : './user/login',
@@ -131,6 +135,9 @@ button {
 		
 		cell=row.insertCell(1);
 		cell.innerHTML=current.login;
+		
+		cell=row.insertCell(2);
+		cell.innerHTML=current.password;
 	}
 
 	function onQueryError(error) {

@@ -94,12 +94,69 @@ public class ServiceManagerImpl implements ServiceManager {
 	}
 
 	@Override
-	public String registerNewUser(User user) {
+	public boolean registerNewUser(User user) {
 		final User checkUser = userService.getUser(user.getLogin());
 		if (checkUser != null)
+			return false;
+
+		if (userService.addUser(user)) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean addPoint(String token, Point point) {
+		final User user = userService.getUserByToken(token);
+		if (user == null)
+			return false;
+
+		point.setId_user(user.getId());
+		if (pointService.addPoint(point))
+			return true;
+		return false;
+	}
+
+	@Override
+	public boolean addFriend(String token, User newfriend) {
+		final User user = userService.getUserByToken(token);
+		if (user == null)
+			return false;
+
+		final User userFriend = userService.getUser(newfriend.getLogin());
+
+		if (userFriend == null)
+			return false;
+		final Friend friend = new Friend(user.getId(), userFriend.getId(), 1);
+		if (friendService.addFriend(friend)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public List<User> getAllFriends(String token) {
+		final User user = userService.getUserByToken(token);
+		if (user == null)
 			return null;
-		userService.addUser(user);
-		return userService.loginUser(user);
+
+		final List<Friend> listFriend = friendService.getAllUserFriend(user.getId());
+		final List<User> listUser = new ArrayList<>();
+
+		for (Friend friend : listFriend) {
+			listUser.add(userService.getUser(friend.getId_user()));
+		}
+		return listUser;
+	}
+
+	@Override
+	public List<User> getNearbyFriends(String token) {
+		final User user = userService.getUserByToken(token);
+		if (user == null)
+			return null;
+		
+		return getNearbyFriends(user.getId());
 	}
 
 }

@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.List;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import teamProject.dao.database.UserDao;
 import teamProject.entities.User;
@@ -107,9 +107,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean checkUser(User user) {
-
-		return false;
+	@Transactional
+	public User getUserByToken(String token) {
+		if (token == null || token.length() == 0)
+			return null;
+		User user = null;
+		try {
+			user=userDao.getByToken(token);
+		} catch (Exception e) {
+			user = null;
+		}
+		return user;
 	}
 
 }

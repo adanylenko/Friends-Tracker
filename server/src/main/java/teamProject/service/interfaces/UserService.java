@@ -19,5 +19,5 @@ public interface UserService {
 
 	String loginUser(User user);
 	
-	boolean checkUser(User user);
+	User getUserByToken(String token);
 }

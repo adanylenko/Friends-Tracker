@@ -2,7 +2,7 @@ package teamProject.service;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import teamProject.dao.database.FriendDao;
 import teamProject.entities.Friend;

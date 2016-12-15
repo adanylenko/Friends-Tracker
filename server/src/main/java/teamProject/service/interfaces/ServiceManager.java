@@ -2,6 +2,7 @@ package teamProject.service.interfaces;
 
 import java.util.List;
 
+import teamProject.entities.Point;
 import teamProject.entities.User;
 
 public interface ServiceManager {
@@ -15,5 +16,13 @@ public interface ServiceManager {
 	
 	List<User> getNearbyFriends(int id_user);
 	
-	String registerNewUser(User user);
+	boolean registerNewUser(User user);
+
+	boolean addPoint(String token, Point point);
+
+	boolean addFriend(String token, User friend);
+
+	List<User> getAllFriends(String token);
+
+	List<User> getNearbyFriends(String token);
 }

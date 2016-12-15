@@ -17,27 +17,27 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User add(User user) {
+	public User add(User user) throws Exception {
 		sessionFactory.getCurrentSession().save(user);
 		return user;
 
 	}
 
 	@Override
-	public User update(User user) {
+	public User update(User user) throws Exception {
 		sessionFactory.getCurrentSession().saveOrUpdate(user);
 		return user;
 	}
 
 	@Override
-	public List<User> getAll() {
+	public List<User> getAll() throws Exception {
 		List<User> users = null;
 		users = sessionFactory.getCurrentSession().createCriteria(User.class).list();
 		return users;
 	}
 
 	@Override
-	public User getUser(String login) {
+	public User getUser(String login) throws Exception {
 		User user = null;
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(User.class);
 		user = (User) criteria.add(Restrictions.eq("login", login)).uniqueResult();
@@ -46,16 +46,25 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User delete(User user) {
+	public User delete(User user) throws Exception {
 		sessionFactory.getCurrentSession().delete(user);
 		return user;
 
 	}
 
 	@Override
-	public User getbyId(int id) {
+	public User getbyId(int id) throws Exception {
 		User user = null;
 		user = (User) sessionFactory.getCurrentSession().get(User.class, id);
+		return user;
+	}
+
+	@Override
+	public User getByToken(String token) throws Exception {
+		User user = null;
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(User.class);
+		user = (User) criteria.add(Restrictions.eq("token", token)).uniqueResult();
+
 		return user;
 	}
 

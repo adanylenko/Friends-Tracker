@@ -16,4 +16,6 @@ public interface UserDao {
 	List<User> getAll() throws Exception;
 
 	User getUser(String login) throws Exception;
+
+	User getByToken(String token)  throws Exception;
 }

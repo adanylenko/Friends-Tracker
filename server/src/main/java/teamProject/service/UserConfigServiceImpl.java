@@ -1,6 +1,7 @@
 package teamProject.service;
 
-import javax.transaction.Transactional;
+
+import org.springframework.transaction.annotation.Transactional;
 
 import teamProject.dao.database.UserConfigDao;
 import teamProject.entities.UserConfig;

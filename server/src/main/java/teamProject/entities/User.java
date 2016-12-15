@@ -2,6 +2,8 @@ package teamProject.entities;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Created by adanu on 31.10.2016.
  */

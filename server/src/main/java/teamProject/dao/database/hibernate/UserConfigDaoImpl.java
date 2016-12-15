@@ -17,25 +17,25 @@ public class UserConfigDaoImpl implements UserConfigDao {
 	}
 
 	@Override
-	public UserConfig add(UserConfig config) {
+	public UserConfig add(UserConfig config) throws Exception {
 		sessionFactory.getCurrentSession().save(config);
 		return config;
 	}
 
 	@Override
-	public UserConfig update(UserConfig config) {
+	public UserConfig update(UserConfig config) throws Exception {
 		sessionFactory.getCurrentSession().saveOrUpdate(config);
 		return config;
 	}
 
 	@Override
-	public UserConfig delete(UserConfig config) {
+	public UserConfig delete(UserConfig config) throws Exception {
 		sessionFactory.getCurrentSession().delete(config);
 		return config;
 	}
 
 	@Override
-	public UserConfig getUserConfig(int id_user) {
+	public UserConfig getUserConfig(int id_user) throws Exception {
 		UserConfig config = null;
 		final Criteria criteria = sessionFactory.getCurrentSession().createCriteria(UserConfig.class);
 		config = (UserConfig) criteria.add(Restrictions.eq("id_user", id_user)).uniqueResult();
@@ -44,14 +44,14 @@ public class UserConfigDaoImpl implements UserConfigDao {
 	}
 
 	@Override
-	public UserConfig getbyId(int id) {
+	public UserConfig getbyId(int id) throws Exception {
 		UserConfig userConfig = null;
 		userConfig = (UserConfig) sessionFactory.getCurrentSession().get(UserConfig.class, id);
 		return userConfig;
 	}
 
 	@Override
-	public List<UserConfig> getAll() {
+	public List<UserConfig> getAll() throws Exception {
 		List<UserConfig> usersConfig = null;
 		usersConfig = sessionFactory.getCurrentSession().createCriteria(UserConfig.class).list();
 		return usersConfig;
