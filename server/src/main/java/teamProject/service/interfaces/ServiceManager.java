@@ -4,6 +4,7 @@ import java.util.List;
 
 import teamProject.entities.Point;
 import teamProject.entities.User;
+import teamProject.entities.UserConfig;
 
 public interface ServiceManager {
 	UserService getUserService();
@@ -25,4 +26,6 @@ public interface ServiceManager {
 	List<User> getAllFriends(String token);
 
 	List<User> getNearbyFriends(String token);
+
+	boolean updateUserConfig(String token, UserConfig userConfig);
 }

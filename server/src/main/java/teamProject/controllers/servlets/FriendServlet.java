@@ -36,8 +36,15 @@ public class FriendServlet {
 	
 	@RequestMapping(value = "/{token}", method = RequestMethod.GET)
 	private List<User> getAllFriends(@PathVariable final String token) {
-		LOG.debug("Add friend for user with token:{}", token);
+		LOG.debug("Get all friend for user with token:{}", token);
 		return serviceManager.getAllFriends(token); 
+
+	}
+	
+	@RequestMapping(value = "/nearby/{token}", method = RequestMethod.GET)
+	private List<User> getNearbyFriends(@PathVariable final String token) {
+		LOG.debug("Get nearby friend for user with token:{}", token);
+		return serviceManager.getNearbyFriends(token); 
 
 	}
 }

@@ -100,6 +100,8 @@ public class ServiceManagerImpl implements ServiceManager {
 			return false;
 
 		if (userService.addUser(user)) {
+			UserConfig userConfig = new UserConfig(user.getId(), 10, 50);
+			userConfigService.addUserConfig(userConfig);
 			return true;
 		}
 		return false;
@@ -155,8 +157,18 @@ public class ServiceManagerImpl implements ServiceManager {
 		final User user = userService.getUserByToken(token);
 		if (user == null)
 			return null;
-		
+
 		return getNearbyFriends(user.getId());
+	}
+
+	@Override
+	public boolean updateUserConfig(String token, UserConfig userConfig) {
+		final User user = userService.getUserByToken(token);
+		if (user == null)
+			return false;
+		
+		
+		return userConfigService.changeUserConfig(userConfig);
 	}
 
 }
