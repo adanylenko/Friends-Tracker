@@ -166,8 +166,8 @@ public class ServiceManagerImpl implements ServiceManager {
 		final User user = userService.getUserByToken(token);
 		if (user == null)
 			return false;
-		
-		
+
+		userConfig.setId_user(user.getId());
 		return userConfigService.changeUserConfig(userConfig);
 	}
 
