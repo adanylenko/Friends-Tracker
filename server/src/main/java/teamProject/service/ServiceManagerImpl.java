@@ -1,5 +1,6 @@
 package teamProject.service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,16 +57,23 @@ public class ServiceManagerImpl implements ServiceManager {
 	}
 
 	@Override
-	public List<User> getNearbyFriends(int id_user) {
+	public List<User> getNearbyFriends(String token) {
+		final User user = userService.getUserByToken(token);
+		if (user == null)
+			return null;
+
+		final int id_user = user.getId();
+
 		final List<Friend> friends = friendService.getAllUserFriend(id_user);
 		final List<User> nearbyFriends = new ArrayList<>();
 		final Point userPoint = pointService.getCntLastUserPoint(id_user, 1).get(0);
-		final UserConfig userConfig = userConfigService.getUserConfig(id_user);
+		// final UserConfig userConfig =
+		// userConfigService.getUserConfig(id_user);
 
-		if (friends == null || userPoint == null || friends.size() == 0 || userConfig == null)
+		if (friends == null || userPoint == null || friends.size() == 0)
 			return null;
 
-		final int alertDist = userConfig.getAlertZone();
+		final int alertDist = 50;
 
 		for (int i = 0; i < friends.size(); i++) {
 			final Point friendPoint = pointService.getCntLastUserPoint(friends.get(i).getId_friend(), 1).get(0);
@@ -100,7 +108,7 @@ public class ServiceManagerImpl implements ServiceManager {
 			return false;
 
 		if (userService.addUser(user)) {
-			UserConfig userConfig = new UserConfig(user.getId(), 10, 50);
+			UserConfig userConfig = new UserConfig(userService.getUser(user.getLogin()).getId(), 10, 50);
 			userConfigService.addUserConfig(userConfig);
 			return true;
 		}
@@ -114,6 +122,7 @@ public class ServiceManagerImpl implements ServiceManager {
 			return false;
 
 		point.setId_user(user.getId());
+		point.setDate(new Timestamp(System.currentTimeMillis()));
 		if (pointService.addPoint(point))
 			return true;
 		return false;
@@ -147,18 +156,9 @@ public class ServiceManagerImpl implements ServiceManager {
 		final List<User> listUser = new ArrayList<>();
 
 		for (Friend friend : listFriend) {
-			listUser.add(userService.getUser(friend.getId_user()));
+			listUser.add(userService.getUser(friend.getId_friend()));
 		}
 		return listUser;
-	}
-
-	@Override
-	public List<User> getNearbyFriends(String token) {
-		final User user = userService.getUserByToken(token);
-		if (user == null)
-			return null;
-
-		return getNearbyFriends(user.getId());
 	}
 
 	@Override
@@ -169,6 +169,16 @@ public class ServiceManagerImpl implements ServiceManager {
 
 		userConfig.setId_user(user.getId());
 		return userConfigService.changeUserConfig(userConfig);
+	}
+
+	@Override
+	public UserConfig getUserConfig(String token) {
+		final User user = userService.getUserByToken(token);
+		System.out.println("$$$$$$$$$$=" + user.getId());
+		if (user == null)
+			return null;
+
+		return userConfigService.getUserConfig(user.getId());
 	}
 
 }

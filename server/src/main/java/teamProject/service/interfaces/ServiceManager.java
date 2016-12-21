@@ -15,7 +15,7 @@ public interface ServiceManager {
 
 	PointService getPointService();
 	
-	List<User> getNearbyFriends(int id_user);
+	List<User> getNearbyFriends(String token);
 	
 	boolean registerNewUser(User user);
 
@@ -25,7 +25,7 @@ public interface ServiceManager {
 
 	List<User> getAllFriends(String token);
 
-	List<User> getNearbyFriends(String token);
-
 	boolean updateUserConfig(String token, UserConfig userConfig);
+
+	UserConfig getUserConfig(String token);
 }

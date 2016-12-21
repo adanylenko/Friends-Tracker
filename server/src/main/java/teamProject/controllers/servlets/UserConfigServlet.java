@@ -26,10 +26,17 @@ public class UserConfigServlet {
 	@RequestMapping(value = "/{token}", method = RequestMethod.POST)
 	private ResponseEntity<String> updateUserConfig(@PathVariable final String token,
 			@RequestBody UserConfig userConfig) {
-		LOG.debug("Update user config request for user with token:{}", token);
+		LOG.debug("Update user config update for user with token:{}", token);
 		if (serviceManager.updateUserConfig(token, userConfig)) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
+	
+	@RequestMapping(value = "/{token}", method = RequestMethod.GET)
+	private UserConfig getUserConfig(@PathVariable final String token) {
+		LOG.debug("Update user config request for user with token:{}", token);
+
+		return serviceManager.getUserConfig(token);
 	}
 }
