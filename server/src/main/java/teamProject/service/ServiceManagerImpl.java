@@ -167,14 +167,21 @@ public class ServiceManagerImpl implements ServiceManager {
 		if (user == null)
 			return false;
 
+		final UserConfig userConfigOld = userConfigService.getUserConfig(user.getId());
+
+		if (userConfig == null)
+			return false;
+
 		userConfig.setId_user(user.getId());
+		userConfig.setId(userConfigOld.getId());
+
 		return userConfigService.changeUserConfig(userConfig);
 	}
 
 	@Override
 	public UserConfig getUserConfig(String token) {
 		final User user = userService.getUserByToken(token);
-		System.out.println("$$$$$$$$$$=" + user.getId());
+
 		if (user == null)
 			return null;
 

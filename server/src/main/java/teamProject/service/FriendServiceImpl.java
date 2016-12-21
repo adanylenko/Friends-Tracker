@@ -2,6 +2,8 @@ package teamProject.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import teamProject.dao.database.FriendDao;
@@ -9,6 +11,8 @@ import teamProject.entities.Friend;
 import teamProject.service.interfaces.FriendService;
 
 public class FriendServiceImpl implements FriendService {
+	private final static Logger LOG = LoggerFactory.getLogger(FriendServiceImpl.class);
+
 	private FriendDao friendDao;
 
 	public void setFriendDao(FriendDao friendDao) {
@@ -22,6 +26,7 @@ public class FriendServiceImpl implements FriendService {
 			friendDao.add(friend);
 			return true;
 		} catch (Exception ex) {
+			LOG.error("Error when try to add friend for user:{}",friend.getId_user(),ex);
 			return false;
 		}
 
@@ -34,6 +39,7 @@ public class FriendServiceImpl implements FriendService {
 			friendDao.update(friend);
 			return true;
 		} catch (Exception ex) {
+			LOG.error("Error when try to change friend for user:{}",friend.getId_user(),ex);
 			return false;
 		}
 	}
@@ -45,6 +51,7 @@ public class FriendServiceImpl implements FriendService {
 			friendDao.delete(friend);
 			return true;
 		} catch (Exception ex) {
+			LOG.error("Error when try to delete friend for user:{}",friend.getId_user(),ex);
 			return false;
 		}
 	}
@@ -56,6 +63,7 @@ public class FriendServiceImpl implements FriendService {
 		try {
 			friend = friendDao.getbyId(id_friend);
 		} catch (Exception ex) {
+			LOG.error("Error when try to get friend with id:{}",id_friend,ex);
 			friend = null;
 		}
 		return friend;
@@ -68,6 +76,7 @@ public class FriendServiceImpl implements FriendService {
 		try {
 			friends = friendDao.getUserFriends(id_user);
 		} catch (Exception ex) {
+			LOG.error("Error when try to get all friends for user:{}",id_user,ex);
 			friends = null;
 		}
 		return friends;
@@ -80,6 +89,7 @@ public class FriendServiceImpl implements FriendService {
 		try {
 			friends = friendDao.getAll();
 		} catch (Exception ex) {
+			LOG.error("Error when try to all friends",ex);
 			friends = null;
 		}
 		return friends;

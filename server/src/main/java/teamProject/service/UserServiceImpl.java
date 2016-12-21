@@ -4,6 +4,8 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import teamProject.dao.database.UserDao;
@@ -11,6 +13,8 @@ import teamProject.entities.User;
 import teamProject.service.interfaces.UserService;
 
 public class UserServiceImpl implements UserService {
+	private final static Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
+
 	private UserDao userDao;
 
 	public void setUserDao(UserDao userDao) {
@@ -24,6 +28,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			users = userDao.getAll();
 		} catch (Exception ex) {
+			LOG.error("Error when try to get all users.", ex);
 			users = null;
 		}
 		return users;
@@ -35,7 +40,8 @@ public class UserServiceImpl implements UserService {
 		try {
 			userDao.add(user);
 			return true;
-		} catch (Exception e) {
+		} catch (Exception ex) {
+			LOG.error("Erro when try to add user with id:{}", user.getId(), ex);
 			return false;
 		}
 	}
@@ -46,7 +52,8 @@ public class UserServiceImpl implements UserService {
 		try {
 			userDao.delete(user);
 			return true;
-		} catch (Exception e) {
+		} catch (Exception ex) {
+			LOG.error("Erro when try to delete user with id:{}", user.getId(), ex);
 			return false;
 		}
 	}
@@ -57,7 +64,8 @@ public class UserServiceImpl implements UserService {
 		try {
 			userDao.update(user);
 			return true;
-		} catch (Exception e) {
+		} catch (Exception ex) {
+			LOG.error("Erro when try to change user with id:{}", user.getId(), ex);
 			return false;
 		}
 	}
@@ -68,7 +76,8 @@ public class UserServiceImpl implements UserService {
 		User user = null;
 		try {
 			user = userDao.getUser(login);
-		} catch (Exception e) {
+		} catch (Exception ex) {
+			LOG.error("Erro when try to get user with login:{}", login, ex);
 			user = null;
 		}
 		return user;
@@ -80,7 +89,8 @@ public class UserServiceImpl implements UserService {
 		User user = null;
 		try {
 			user = userDao.getbyId(id_user);
-		} catch (Exception e) {
+		} catch (Exception ex) {
+			LOG.error("Erro when try to get user with id:{}", id_user, ex);
 			user = null;
 		}
 		return user;
@@ -113,8 +123,9 @@ public class UserServiceImpl implements UserService {
 			return null;
 		User user = null;
 		try {
-			user=userDao.getByToken(token);
-		} catch (Exception e) {
+			user = userDao.getByToken(token);
+		} catch (Exception ex) {
+			LOG.error("Erro when try to get user with token:{}", token, ex);
 			user = null;
 		}
 		return user;
