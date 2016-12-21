@@ -26,8 +26,8 @@ public class UserConfigServlet {
 	@RequestMapping(value = "/{token}", method = RequestMethod.POST)
 	private ResponseEntity<String> updateUserConfig(@PathVariable final String token,
 			@RequestBody UserConfig userConfig) {
-		LOG.debug("Update user config update for user with token:{},updatetime:{}, alertzone:{}", token,
-				userConfig.getUpdateTime(), userConfig.getAlertZone());
+		LOG.debug("Update user config update for user with token:{}", token);
+		
 		if (serviceManager.updateUserConfig(token, userConfig)) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
