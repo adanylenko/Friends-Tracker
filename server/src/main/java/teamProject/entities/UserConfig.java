@@ -1,10 +1,16 @@
 package teamProject.entities;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  * Created by adanu on 31.10.2016.
  */
 public class UserConfig {
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+
 	private int id_user;
 	private int updateTime;
 	private int alertZone;

@@ -1,5 +1,8 @@
 package teamProject.entities;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.google.gson.annotations.Expose;
@@ -9,7 +12,9 @@ import com.google.gson.annotations.Expose;
  */
 @XmlRootElement
 public class User {
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+
 	private String login;
 	private String password;
 	private String token;

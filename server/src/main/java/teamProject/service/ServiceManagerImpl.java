@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import teamProject.entities.Friend;
+import teamProject.entities.NearbyFriendsResponseEntity;
 import teamProject.entities.Point;
 import teamProject.entities.User;
 import teamProject.entities.UserConfig;
@@ -57,7 +58,7 @@ public class ServiceManagerImpl implements ServiceManager {
 	}
 
 	@Override
-	public List<User> getNearbyFriends(String token) {
+	public List<NearbyFriendsResponseEntity> getNearbyFriends(String token) {
 		final User user = userService.getUserByToken(token);
 		if (user == null)
 			return null;
@@ -65,15 +66,14 @@ public class ServiceManagerImpl implements ServiceManager {
 		final int id_user = user.getId();
 
 		final List<Friend> friends = friendService.getAllUserFriend(id_user);
-		final List<User> nearbyFriends = new ArrayList<>();
+		final List<NearbyFriendsResponseEntity> nearbyFriends = new ArrayList<>();
 		final Point userPoint = pointService.getCntLastUserPoint(id_user, 1).get(0);
-		// final UserConfig userConfig =
-		// userConfigService.getUserConfig(id_user);
+		final UserConfig userConfig = userConfigService.getUserConfig(id_user);
 
 		if (friends == null || userPoint == null || friends.size() == 0)
 			return null;
 
-		final int alertDist = 50;
+		final int alertDist = userConfig.getAlertZone();
 
 		for (int i = 0; i < friends.size(); i++) {
 			final Point friendPoint = pointService.getCntLastUserPoint(friends.get(i).getId_friend(), 1).get(0);
@@ -82,8 +82,14 @@ public class ServiceManagerImpl implements ServiceManager {
 
 			final double dist = distFrom(userPoint.getLat(), userPoint.getLng(), friendPoint.getLat(),
 					friendPoint.getLng());
-			if (dist <= alertDist)
-				nearbyFriends.add(userService.getUser(friends.get(i).getId()));
+			if (dist <= alertDist) {
+				final User nearbyUser = userService.getUser(friends.get(i).getId_friend());
+				
+				if (nearbyFriends == null)
+					continue;
+
+				nearbyFriends.add(new NearbyFriendsResponseEntity(nearbyUser.getLogin(),friendPoint.getLat(),friendPoint.getLng()));
+			}
 		}
 
 		return nearbyFriends;
@@ -108,7 +114,7 @@ public class ServiceManagerImpl implements ServiceManager {
 			return false;
 
 		if (userService.addUser(user)) {
-			UserConfig userConfig = new UserConfig(userService.getUser(user.getLogin()).getId(), 10, 50);
+			final UserConfig userConfig = new UserConfig(userService.getUser(user.getLogin()).getId(), 10, 50);
 			userConfigService.addUserConfig(userConfig);
 			return true;
 		}

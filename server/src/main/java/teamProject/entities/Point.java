@@ -2,11 +2,18 @@ package teamProject.entities;
 
 import java.sql.Timestamp;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  * Created by adanu on 31.10.2016.
  */
 public class Point {
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+
 	private int id;
+	
 	private int id_user;
 	private double lat;
 	private double lng;

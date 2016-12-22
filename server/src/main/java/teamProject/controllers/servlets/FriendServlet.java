@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import teamProject.entities.NearbyFriendsResponseEntity;
 import teamProject.entities.User;
 import teamProject.service.interfaces.ServiceManager;
 
@@ -42,7 +43,7 @@ public class FriendServlet {
 	}
 	
 	@RequestMapping(value = "/nearby/{token}", method = RequestMethod.GET)
-	private List<User> getNearbyFriends(@PathVariable final String token) {
+	private List<NearbyFriendsResponseEntity> getNearbyFriends(@PathVariable final String token) {
 		LOG.debug("Get nearby friend for user with token:{}", token);
 		return serviceManager.getNearbyFriends(token); 
 
