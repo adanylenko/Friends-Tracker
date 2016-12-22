@@ -2,13 +2,15 @@ package teamProject.entities;
 
 public class NearbyFriendsResponseEntity {
 	private String login;
+	private String phoneNumber;
 	private double lat;
 	private double lng;
 
-	public NearbyFriendsResponseEntity(String login, double lat, double lng) {
+	public NearbyFriendsResponseEntity(String login, double lat, double lng,String phoneNumber) {
 		this.login = login;
 		this.lat = lat;
 		this.lng = lng;
+		this.setPhoneNumber(phoneNumber);
 	}
 
 	public String getLogin() {
@@ -33,6 +35,14 @@ public class NearbyFriendsResponseEntity {
 
 	public void setLng(double lng) {
 		this.lng = lng;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 }

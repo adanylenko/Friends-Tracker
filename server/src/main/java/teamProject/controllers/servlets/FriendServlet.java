@@ -35,6 +35,15 @@ public class FriendServlet {
 		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 	}
 	
+	@RequestMapping(value = "/{token}", method = RequestMethod.DELETE)
+	private ResponseEntity<String> deleteFriend(@PathVariable final String token, @RequestBody final User user) {
+		LOG.debug("Add friend for user with token:{}", token);
+		if (serviceManager.deleteFriend(token, user.getLogin())) {
+			return new ResponseEntity<String>(HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+	}
+	
 	@RequestMapping(value = "/{token}", method = RequestMethod.GET)
 	private List<User> getAllFriends(@PathVariable final String token) {
 		LOG.debug("Get all friend for user with token:{}", token);

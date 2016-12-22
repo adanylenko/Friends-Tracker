@@ -5,19 +5,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.google.gson.annotations.Expose;
-
 /**
  * Created by adanu on 31.10.2016.
  */
 @XmlRootElement
 public class User {
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	private String login;
 	private String password;
 	private String token;
+	private String phoneNumber;
 
 	public User() {
 	}
@@ -27,10 +27,11 @@ public class User {
 		this.password = password;
 	}
 
-	public User(String login, String password, String token) {
+	public User(String login, String password, String token, String phoneNumber) {
 		this.login = login;
 		this.password = password;
-		this.setToken(token);
+		this.token = token;
+		this.phoneNumber = phoneNumber;
 	}
 
 	public int getId() {
@@ -90,5 +91,13 @@ public class User {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 }

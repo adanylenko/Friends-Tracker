@@ -84,11 +84,12 @@ public class ServiceManagerImpl implements ServiceManager {
 					friendPoint.getLng());
 			if (dist <= alertDist) {
 				final User nearbyUser = userService.getUser(friends.get(i).getId_friend());
-				
+
 				if (nearbyFriends == null)
 					continue;
 
-				nearbyFriends.add(new NearbyFriendsResponseEntity(nearbyUser.getLogin(),friendPoint.getLat(),friendPoint.getLng()));
+				nearbyFriends.add(new NearbyFriendsResponseEntity(nearbyUser.getLogin(), friendPoint.getLat(),
+						friendPoint.getLng(),nearbyUser.getPhoneNumber()));
 			}
 		}
 
@@ -192,6 +193,19 @@ public class ServiceManagerImpl implements ServiceManager {
 			return null;
 
 		return userConfigService.getUserConfig(user.getId());
+	}
+
+	@Override
+	public boolean deleteFriend(String token, String friendLogin) {
+		final User user = userService.getUserByToken(token);
+		if (user == null)
+			return false;
+
+		final User friendUser = userService.getUser(friendLogin);
+		if (friendUser == null)
+			return false;
+
+		return friendService.deleteUserFriend(user.getId(), friendUser.getId());
 	}
 
 }

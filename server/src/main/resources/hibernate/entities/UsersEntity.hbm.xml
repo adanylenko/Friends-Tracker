@@ -9,5 +9,6 @@
         <property name="login" column="login"/>
         <property name="password" column="password"/>
         <property name="token" column="token"/>
+        <property name="phoneNumber" column="phoneNumber"/>
     </class>
 </hibernate-mapping>

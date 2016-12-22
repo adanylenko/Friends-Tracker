@@ -16,4 +16,6 @@ public interface FriendDao {
 	List<Friend> getAll() throws Exception;
 
 	List<Friend> getUserFriends(int id_user) throws Exception;
+	
+	Friend deleteUserFriend(int id_user,int id_friend)throws Exception;
 }

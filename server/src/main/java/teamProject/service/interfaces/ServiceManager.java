@@ -29,4 +29,6 @@ public interface ServiceManager {
 	boolean updateUserConfig(String token, UserConfig userConfig);
 
 	UserConfig getUserConfig(String token);
+
+	boolean deleteFriend(String token, String friendLogin);
 }

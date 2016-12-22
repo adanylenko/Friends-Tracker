@@ -10,6 +10,8 @@ public interface FriendService {
 	boolean changeFriend(Friend friend);
 
 	boolean deleteFriend(Friend friend);
+	
+	boolean deleteUserFriend(int id_user,int id_friend);
 
 	Friend getFriend(int id_friend);
 

@@ -56,4 +56,17 @@ public class FriendDaoImpl implements FriendDao {
 		return friends;
 	}
 
+	@Override
+	public Friend deleteUserFriend(int id_user, int id_friend) throws Exception {
+		final Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Friend.class);
+		criteria.add(Restrictions.eq("id_user", id_user));
+		criteria.add(Restrictions.eq("id_friend", id_friend));
+
+		final Friend friend = (Friend) criteria.uniqueResult();
+		if (friend != null)
+			delete(friend);
+
+		return friend;
+	}
+
 }
