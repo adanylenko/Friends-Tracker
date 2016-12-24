@@ -1,14 +1,18 @@
 package teamProject.entities;
 
+import javax.annotation.Generated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * Created by adanu on 31.10.2016.
  */
 public class UserConfig {
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Generated(value="GenerationTime.INSERT")
+	@GenericGenerator(name="fieldGenerator", strategy="sequence")
 	private int id;
 
 	private int id_user;
