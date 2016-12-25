@@ -26,6 +26,7 @@ class Settings extends Component {
 		this.props.user.logout()
 	}
 
+
 	render() {
 		return (
 			<View>

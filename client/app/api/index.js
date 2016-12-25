@@ -17,13 +17,12 @@ export async function login(login, password) {
 	}
 }
 
-export async function signup(login, password) {
+export async function signup(login, password, phoneNumber) {
 	try {
-		let response = await fetchJson(`${addr}/user/login`, 'POST', {
-			login, password
-		});
+		let response = await fetchJson(`${addr}/user/register`, 'POST', {
+			login, password, phoneNumber
+		})
 		let token = await response.text()
-		console.log(token)
 		return token;
 	} catch(error) {
 		console.log(error)
@@ -31,6 +30,54 @@ export async function signup(login, password) {
 	}
 }
 
+export async function sendPoint(position, token) {
+	let { latitude: lat, longitude: lng } = position.coords
+	try {
+		let response = await fetchJson(`${addr}/point/${token}`, 'PUT', {
+			lat, lng
+		})
+		let ret = await response.text()
+		return ret
+	} catch(error) {
+		console.log(error)
+		return null
+	}
+}
+
+export async function addFriend(login, token) {
+	try {
+		let response = await fetchJson(`${addr}/friend/${token}`, 'PUT', {
+			login
+		})
+		let ret = await response.text()
+		return ret
+	} catch(error) {
+		console.log(error)
+		return null
+	}
+}
+
+export async function getFriends(token) {
+	try {
+		let response = await fetch(`${addr}/friend/${token}`)
+		let ret = await response.json()
+		return ret
+	} catch(error) {
+		console.log(error)
+		return null
+	}
+}
+
+export async function getNearby(token) {
+	try {
+		let response = await fetch(`${addr}/friend/nearby/${token}`)
+		let ret = await response.json()
+		return ret
+	} catch(error) {
+		console.log(error)
+		return null
+	}
+}
 
 async function fetchJson(url, method, payload) {
 	return fetch(url, {

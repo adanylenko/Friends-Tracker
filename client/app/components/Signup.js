@@ -6,8 +6,8 @@ import {
 } from 'react-native';
 import React, {Component} from 'react'
 
-import { Actions } from 'react-native-router-flux'
 import { observer, inject } from 'mobx-react/native'
+
 import { FormLabel, FormInput, Button } from 'react-native-elements'
 
 const styles = StyleSheet.create({
@@ -22,9 +22,9 @@ const styles = StyleSheet.create({
 @observer
 export default class Login extends Component {
 
-	login() {
+	signup() {
 		let { user } = this.props
-		user.setLogin()
+		user.signUp()
 	}
 
 	render() {
@@ -47,17 +47,18 @@ export default class Login extends Component {
 					/>
 				</View>
 				<View>
+					<FormLabel>Phone</FormLabel>
+					<FormInput
+						onChange={event => user.setPhone(event.nativeEvent.text)}
+						value={user.phone}
+					/>
+				</View>
+				<View>
 					<Button
 						backgroundColor={"#50d3bb"}
 						large
-						title='Log In'
-						onPress={this.login.bind(this)}
-					/>
-					<Button
-						backgroundColor={"#eee"}
-						color={"#444"}
 						title='Sign Up'
-						onPress={() => Actions.signup()}
+						onPress={this.signup.bind(this)}
 					/>
 				</View>
 			</View>

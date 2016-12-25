@@ -14,6 +14,7 @@ import MapV from './Map'
 import Friends from './Friends'
 import Settings from './Settings'
 import Login from './Login'
+import Signup from './Signup'
 
 
 import State from '../state'
@@ -38,7 +39,12 @@ class Home extends Component {
 	render() {
 		console.log('token ', this.props.user.token)
 		if(this.props.user.token === '') {
-			return <Login />
+				return <Router>
+					<Scene key="logIn" hideNavBar={true}>
+						<Scene key="login" component={Login} initial />
+						<Scene key="signup" component={Signup} />
+					</Scene>
+				</Router>
 		}
 
 		return (

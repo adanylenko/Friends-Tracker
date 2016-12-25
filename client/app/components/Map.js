@@ -4,6 +4,8 @@ import {
 } from 'react-native';
 import React, {Component} from 'react'
 
+import { observer, inject } from 'mobx-react/native'
+
 import MapView from 'react-native-maps';
 
 const styles = StyleSheet.create({
@@ -13,23 +15,35 @@ const styles = StyleSheet.create({
 	},
 })
 
+@inject('friends')
+@observer
 class MapV extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props)
+		this.state = {
+			region: {
+				latitude: 51.50188,
+				longitude: 31.31613,
+				latitudeDelta: 0.0922,
+				longitudeDelta: 0.0421,
+			},
+		}
 	}
+
+	onRegionChange(region) {
+		this.setState({ region })
+	}
+
+
 
 	render() {
 		return (
 			<View style={ styles.map }>
 				<MapView
 					style={ styles.map }
-					initialRegion={{
-						latitude: 37.78825,
-						longitude: -122.4324,
-						latitudeDelta: 0.0922,
-						longitudeDelta: 0.0421,
-					}}
-				/>
+					region={this.state.region}
+				>
+				</MapView>
 			</View>
 		)
 	}

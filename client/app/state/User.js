@@ -1,4 +1,4 @@
-import { action, observable } from 'mobx'
+import { action, observable, computed } from 'mobx'
 import { login, signup } from '../api'
 
 let storage = null
@@ -6,10 +6,17 @@ let storage = null
 export default class User {
 	@observable username = '';
 	@observable password = '';
+	@observable phone = '';
 	@observable token = '';
 
 	constructor(_storage) {
 		storage = _storage
+	}
+	@computed get loggedIn() {
+		if(this.token === '') {
+			return false
+		}
+		return true
 	}
 
 	@action setUsername(value) {
@@ -18,6 +25,10 @@ export default class User {
 
 	@action setPassword(value) {
 		this.password = value
+	}
+
+	@action setPhone(value) {
+		this.phone = value
 	}
 
 	@action logout() {
@@ -54,11 +65,11 @@ export default class User {
 	}
 
 	@action async signUp() {
-		let { username, password } = this
+		let { username, password, phone } = this
 		if(username === '' || password === '') return
 
 		try {
-			let token = await signup(username, password)
+			let token = await signup(username, password, phone)
 			await this.setLogin()
 		} catch(err) {
 			console.log(err)
