@@ -65,6 +65,10 @@ public class ServiceManagerImpl implements ServiceManager {
 
 		final int id_user = user.getId();
 
+		if (pointService.getCntLastUserPoint(id_user, 1) == null
+				|| pointService.getCntLastUserPoint(id_user, 1).size() == 0)
+			return null;
+
 		final List<Friend> friends = friendService.getAllUserFriend(id_user);
 		final List<NearbyFriendsResponseEntity> nearbyFriends = new ArrayList<>();
 		final Point userPoint = pointService.getCntLastUserPoint(id_user, 1).get(0);
@@ -89,7 +93,7 @@ public class ServiceManagerImpl implements ServiceManager {
 					continue;
 
 				nearbyFriends.add(new NearbyFriendsResponseEntity(nearbyUser.getLogin(), friendPoint.getLat(),
-						friendPoint.getLng(),nearbyUser.getPhoneNumber()));
+						friendPoint.getLng(), nearbyUser.getPhoneNumber()));
 			}
 		}
 
@@ -154,16 +158,20 @@ public class ServiceManagerImpl implements ServiceManager {
 	}
 
 	@Override
-	public List<User> getAllFriends(String token) {
+	public List<NearbyFriendsResponseEntity> getAllFriends(String token) {
 		final User user = userService.getUserByToken(token);
 		if (user == null)
 			return null;
 
 		final List<Friend> listFriend = friendService.getAllUserFriend(user.getId());
-		final List<User> listUser = new ArrayList<>();
+		final List<NearbyFriendsResponseEntity> listUser = new ArrayList<>();
 
 		for (Friend friend : listFriend) {
-			listUser.add(userService.getUser(friend.getId_friend()));
+			final User friendUser = userService.getUser(friend.getId_friend());
+			if (friendUser == null)
+				continue;
+
+			listUser.add(new NearbyFriendsResponseEntity(friendUser.getLogin(), friendUser.getPhoneNumber()));
 		}
 		return listUser;
 	}

@@ -24,7 +24,7 @@ public interface ServiceManager {
 
 	boolean addFriend(String token, User friend);
 
-	List<User> getAllFriends(String token);
+	List<NearbyFriendsResponseEntity> getAllFriends(String token);
 
 	boolean updateUserConfig(String token, UserConfig userConfig);
 

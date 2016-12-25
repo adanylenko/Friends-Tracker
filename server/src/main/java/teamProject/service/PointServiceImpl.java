@@ -91,7 +91,7 @@ public class PointServiceImpl implements PointService {
 	@Override
 	@Transactional
 	public List<Point> getCntLastUserPoint(int id_user, int cntPoint) {
-		if (cntPoint <= 0)
+		if (id_user==0||cntPoint <= 0)
 			return null;
 		final List<Point> points = getAllUserPoint(id_user);
 		if (points == null)
