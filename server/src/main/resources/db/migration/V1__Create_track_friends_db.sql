@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `trackfriends`.`users` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `login` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
-  `token` VARCHAR(255) NOT NULL,
+  `token` VARCHAR(255) DEFAULT NULL,
   `phoneNumber` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
